@@ -62,8 +62,16 @@ function zoom(delta) {
     scale = Math.min(Math.max(initialScale, scale * delta), maxScale);
     
     if (scale !== oldScale) {
-        centerImage();
+        // Calculate the center of the canvas
+        const centerX = imageContainer.clientWidth / 2;
+        const centerY = imageContainer.clientHeight / 2;
+
+        // Adjust the translation values to keep the center position
+        translateX = centerX - (centerX - translateX) * (scale / oldScale);
+        translateY = centerY - (centerY - translateY) * (scale / oldScale);
+
         limitBounds(); // Ensure the image stays within the container after zooming
+        setTransform();
     }
 }
 
