@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="modal-overlay preview-image">
+        <div class="modal image-view-modal" data-modal="preview-image">
+            <div class="preview-image-option" id="top-left-back-button">
+                <div data-modal="preview-image" onclick="closeModal(this)">
+                    <svg width="30" height="30" viewBox="0 0 33 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M27.9258 19.292H5.92578" stroke="white" stroke-width="2.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M16 8L5 19.5L16 31" stroke="white" stroke-width="2.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </div>
+            </div>
+            <div class="preview" id="preview-image">
+                <img id="image" src="./assets/img3.avif" alt="Preview Image" onload="initializeCanvas(this)">
+            </div>
+            <div id="image-count">
+                <span id="current-image"></span> / <span id="total-images"></span>
+            </div>
+            <button class="nav-button left" onclick="navigateImage('left')">
+                <svg width="30" height="30" viewBox="0 0 19 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17 33L2 17.5L17 2" stroke="white" stroke-width="4" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </button>
+            <button class="nav-button right" onclick="navigateImage('right')">
+                <svg width="30" height="30" viewBox="0 0 19 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 33L17 17.5L2 2" stroke="white" stroke-width="4" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </button>
+        
+            <div id="top-right-icons-container">
+                <div>
+                    <div class="icon-with-text">
+                        <div id="download-perview-btn" data-action="download" onclick="handlePreviewImage(this)">
+                            <svg width="30" height="30" viewBox="0 0 29 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15 18V2" stroke="white" stroke-width="2.3" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M27 17V26H2V17" stroke="white" stroke-width="2.3" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M21 13L15 19L9 13" stroke="white" stroke-width="2.3" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <span class="hover-text">Download</span>
+                    </div>
+                    <div class="icon-with-text">
+                        <div id="delete-perview-btn" data-action="delete" onclick="handlePreviewImage(this)">
+                            <svg width="30" height="30" viewBox="0 0 30 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M28.125 6.75H2" stroke="white" stroke-width="2.4" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M11.5 13.875V23.375" stroke="white" stroke-width="2.4" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M18.625 13.875V23.375" stroke="white" stroke-width="2.4" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path
+                                    d="M25.75 6.75V29.3125C25.75 29.6274 25.6249 29.9295 25.4022 30.1522C25.1795 30.3749 24.8774 30.5 24.5625 30.5H5.5625C5.24756 30.5 4.94551 30.3749 4.72281 30.1522C4.50011 29.9295 4.375 29.6274 4.375 29.3125V6.75"
+                                    stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M21 6.75V4.375C21 3.74511 20.7498 3.14102 20.3044 2.69562C19.859 2.25022 19.2549 2 18.625 2H11.5C10.8701 2 10.266 2.25022 9.82062 2.69562C9.37522 3.14102 9.125 3.74511 9.125 4.375V6.75"
+                                    stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <span class="hover-text">Delete</span>
+                    </div>
+                    <div class="icon-with-text">
+                        <div class="con-like">
+                            <input class="like" type="checkbox">
+                            <div class="checkmark"></div>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="outline" viewBox="0 0 24 24">
+                                <path
+                                    d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Z">
+                                </path>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="filled" viewBox="0 0 24 24">
+                                <path
+                                    d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Z">
+                                </path>
+                            </svg>
+                            <svg width="50" height="50" xmlns="http://www.w3.org/2000/svg" class="celebrate">
+                                <polygon class="poly" points="0,0 10,10"></polygon>
+                                <polygon class="poly" points="0,25 10,25"></polygon>
+                                <polygon class="poly" points="0,50 10,40"></polygon>
+                                <polygon class="poly" points="50,0 40,10"></polygon>
+                                <polygon class="poly" points="50,25 40,25"></polygon>
+                                <polygon class="poly" points="50,50 40,40"></polygon>
+                            </svg>
+                        </div>
+                        <span class="hover-text">Favourite</span>
+                    </div>
+                </div>
+            </div>
+            <div id="side-icons-container">
+                <div class="icon-with-text">
+                    <div id="play-slideshow-btn" onclick="handleSlideshow()">
+                        <svg width="30" height="30" viewBox="0 0 28 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M2 3.18625V29.8138C2.00392 30.0262 2.06339 30.2339 2.17241 30.4159C2.28144 30.5978 2.43616 30.7476 2.62099 30.8501C2.80581 30.9526 3.01421 31.0042 3.22515 30.9997C3.43609 30.9952 3.64213 30.9348 3.82249 30.8245L25.4344 17.5108C25.607 17.4055 25.7498 17.2572 25.8489 17.0801C25.9479 16.9031 26 16.7033 26 16.5C26 16.2967 25.9479 16.0969 25.8489 15.9199C25.7498 15.7428 25.607 15.5945 25.4344 15.4892L3.82249 2.17548C3.64213 2.06519 3.43609 2.00476 3.22515 2.00027C3.01421 1.99578 2.80581 2.04739 2.62099 2.14989C2.43616 2.2524 2.28144 2.40218 2.17241 2.58413C2.06339 2.76608 2.00392 2.97376 2 3.18625Z"
+                                stroke="white" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <span class="hover-text">Play</span>
+                    </div>
+                    <div id="pause-icon" onclick="handleSlideshow()" style="display:none;">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 3H9V21H5V3ZM15 3H19V21H15V3Z" fill="white" />
+                        </svg>
+                        <span class="hover-text">Pause</span>
+                    </div>
+                </div>
+                <div class="icon-with-text">
+                    <div id="zoom-in-btn" onclick="zoom(1.25)">
+                        <svg width="30" height="30" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 16H22" stroke="white" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path
+                                d="M15.5 29C22.9558 29 29 22.9558 29 15.5C29 8.04416 22.9558 2 15.5 2C8.04416 2 2 8.04416 2 15.5C2 22.9558 8.04416 29 15.5 29Z"
+                                stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M25 25L34 34" stroke="white" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M16.0078 10L16.0014 22" stroke="white" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <span class="hover-text">Zoom In</span>
+                </div>
+                <div class="icon-with-text">
+                    <div id="zoom-out-btn" onclick="zoom(0.75)">
+                        <svg width="30" height="30" viewBox="0 0 37 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 16H21" stroke="white" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path
+                                d="M15.5 29C22.9558 29 29 22.9558 29 15.5C29 8.04416 22.9558 2 15.5 2C8.04416 2 2 8.04416 2 15.5C2 22.9558 8.04416 29 15.5 29Z"
+                                stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M26 26L35 35" stroke="white" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <span class="hover-text">Zoom Out</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="test.js"></script>
+</body>
+</html>
