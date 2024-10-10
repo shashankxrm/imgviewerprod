@@ -58,9 +58,20 @@ function centerImage() {
 
 function zoom(delta) {
     const oldScale = scale;
-    const maxScale = imageContainer.clientWidth / canvas.width;
+    const imageAspect = canvas.width / canvas.height;
+    const containerAspect = imageContainer.clientWidth / imageContainer.clientHeight;
+
+    let maxScale;
+    if (imageAspect > containerAspect) {
+        // Landscape image: limit zoom based on container height
+        maxScale = imageContainer.clientHeight / canvas.height;
+    } else {
+        // Portrait image: limit zoom based on container width
+        maxScale = imageContainer.clientWidth / canvas.width;
+    }
+
     scale = Math.min(Math.max(initialScale, scale * delta), maxScale);
-    
+
     if (scale !== oldScale) {
         // Calculate the center of the canvas
         const centerX = imageContainer.clientWidth / 2;
